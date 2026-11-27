@@ -1,96 +1,82 @@
 import Link from "next/link";
-import type { CSSProperties } from "react";
-import { Headphones, Globe2, Users2, Sparkles, ArrowUpRight, Clock3 } from "lucide-react";
-import { SectionHeading } from "@/components/section-heading";
+import { ArrowRight, Globe2, Users2, Sparkles, Headphones, MapPin, Camera } from "lucide-react";
 import { Reveal } from "@/components/reveal";
-import { RotatingWord } from "@/components/rotating-word";
-import { CountUp } from "@/components/count-up";
-import { Marquee } from "@/components/marquee";
-import { getApprovedPhotos, type GalleryPhoto } from "@/lib/gallery";
+import { getApprovedPhotos } from "@/lib/gallery";
+import { services } from "@/lib/content";
 
-const pillars = [
-  { icon: Globe2, title: "International perspective", copy: "Part of an international group, connected by shared ambition and standards.", bg: "bg-sky" },
-  { icon: Headphones, title: "Customer support, 24/7", copy: "Reliable, thoughtful support that keeps people connected whenever they need us.", bg: "bg-sun" },
-  { icon: Users2, title: "People first", copy: "Our people bring care, curiosity and commitment to every interaction.", bg: "bg-mint" },
-  { icon: Sparkles, title: "Service excellence", copy: "A culture of learning, accountability and continuous improvement.", bg: "bg-coral" }
+const why = [
+  { icon: Globe2, label: "International perspective" },
+  { icon: Users2, label: "People first" },
+  { icon: Sparkles, label: "Service excellence" },
+  { icon: Headphones, label: "Customer support, 24/7" }
 ];
-const stats = [{ n: 24, l: "hours a day" }, { n: 7, l: "days a week" }, { n: 365, l: "days a year" }];
-const tilt = (deg: number) => ({ "--r": `${deg}deg`, transform: `rotate(${deg}deg)` }) as CSSProperties;
+const tileBg = ["bg-[#CFDCFF]", "bg-[#FFE3B8]", "bg-[#C5F0DF]"];
 
 export default async function Home() {
   const photos = await getApprovedPhotos(4);
-  const tiles: (GalleryPhoto | null)[] = photos.length ? photos.slice(0, 4) : [null, null];
-  return <>
-    <section className="relative overflow-hidden bg-mist">
-      <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-sun/60 blur-3xl" />
-      <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-grape/25 blur-3xl" />
-      <div className="container relative grid items-center gap-14 py-16 lg:grid-cols-[1.1fr_.9fr] lg:py-24">
+  const hero = photos[0];
+  const strip = photos.slice(1, 4);
+  return <main>
+    <section className="container grid items-center gap-10 pb-10 pt-12 md:pt-20 lg:grid-cols-[1.15fr_.85fr]">
+      <div>
+        <span className="eyebrow"><span className="h-2 w-2 rounded-full bg-[#22C58B]" />Tropical Consulting Ltd · Mauritius</span>
+        <h1 className="mt-6 text-5xl font-bold leading-[1.02] sm:text-6xl lg:text-7xl">Customer support, <span className="text-brand">around the clock.</span></h1>
+        <p className="mt-5 max-w-lg text-lg leading-8 text-slate-600">We are a Mauritius-based team, part of an international group, delivering service excellence with people at the centre.</p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link href="/what-we-do" className="btn btn-primary">What we do <ArrowRight size={16} /></Link>
+          <Link href="/about" className="btn btn-outline">About TCL</Link>
+        </div>
+      </div>
+      <div className="relative mx-auto h-[300px] w-full max-w-md sm:h-[340px]">
+        <div className="absolute right-0 top-0 h-[78%] w-[82%] overflow-hidden rounded-[28px] bg-[#CFDCFF]">
+          {hero && hero.url ? <img src={hero.url} alt={hero.caption || "TCL team"} className="h-full w-full object-cover" /> : <div className="flex h-full w-full items-center justify-center gap-2 text-sm text-ink/70"><Camera size={18} />Team photo</div>}
+        </div>
+        <div className="animate-float absolute bottom-0 left-0 rounded-2xl bg-ink px-5 py-4 text-white"><p className="text-3xl font-bold tracking-tight">24/7</p><p className="mt-1 text-xs text-white/60">Customer support</p></div>
+        <div className="absolute bottom-2 right-3 flex items-center gap-2 rounded-2xl border border-line bg-white px-4 py-2.5 text-sm font-semibold"><MapPin size={16} className="text-brand" />Mauritius</div>
+      </div>
+    </section>
+
+    <section className="container py-3">
+      <Reveal><div className="card p-6 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand">What we do</p>
+        <h2 className="mt-2 text-3xl font-bold md:text-4xl">Support that keeps people connected</h2>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {services.map((s) => <div key={s.title} className={`rounded-2xl p-5 ${s.bg}`}><s.icon size={22} className={s.fg} /><h3 className="mt-5 text-base font-bold">{s.title}</h3><p className="mt-1.5 text-sm leading-6 text-slate-600">{s.short}</p></div>)}
+        </div>
+      </div></Reveal>
+    </section>
+
+    <section className="container grid gap-4 py-3 md:grid-cols-2">
+      <Reveal className="h-full"><div className="h-full rounded-3xl bg-ink p-7 text-white md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#6C8CFF]">About TCL</p>
+        <h2 className="mt-3 text-3xl font-bold leading-tight">International outlook. Mauritius presence.</h2>
+        <p className="mt-4 text-sm leading-7 text-white/65">Part of an international group, our local team shares its standards, experience and ambition.</p>
+        <Link href="/about" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#6C8CFF]">Read our story <ArrowRight size={16} /></Link>
+      </div></Reveal>
+      <Reveal delay={100} className="h-full"><div className="card h-full p-7 md:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand">Why TCL</p>
+        <div className="mt-5 grid gap-4">
+          {why.map((w) => <div key={w.label} className="flex items-center gap-3 text-base font-semibold"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky text-brand"><w.icon size={20} /></span>{w.label}</div>)}
+        </div>
+      </div></Reveal>
+    </section>
+
+    <section className="container py-3">
+      <Reveal><div className="card grid items-center gap-5 p-5 md:grid-cols-[.8fr_repeat(3,1fr)] md:p-6">
         <div>
-          <span className="eyebrow">🌴 Mauritius · Global group</span>
-          <h1 className="mt-6 text-5xl font-extrabold leading-[.98] tracking-tight sm:text-6xl lg:text-8xl">More than support.<br />A global <span className="hl"><RotatingWord words={["mindset", "energy", "team", "vibe"]} /></span></h1>
-          <p className="mt-7 max-w-xl text-lg leading-8 text-slate-700">Tropical Consulting Ltd brings people and service together from Mauritius, delivering customer support and service excellence around the clock.</p>
-          <div className="mt-9 flex flex-wrap gap-4">
-            <Link className="btn btn-primary" href="/careers">Join the crew <ArrowUpRight size={18} /></Link>
-            <Link className="btn btn-outline" href="/what-we-do">Discover TCL</Link>
-          </div>
-          <div className="mt-10 flex items-center gap-3 text-sm font-bold"><span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-ink bg-white"><Clock3 size={20} /></span> Here for customers, 24 hours a day · 7 days a week</div>
+          <p className="text-xs font-semibold uppercase tracking-[.12em] text-brand">Life at TCL</p>
+          <h2 className="mt-2 text-xl font-bold leading-snug">Good people make great moments</h2>
+          <Link href="/gallery" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">See the gallery <ArrowRight size={15} /></Link>
         </div>
-        <div className="relative mx-auto grid w-full max-w-md grid-cols-2 gap-4 sm:max-w-lg">
-          <div style={tilt(3)} className="animate-float card col-span-2 bg-ocean p-6 text-white"><Headphones size={34} /><p className="mt-4 font-display text-6xl font-extrabold">24/7</p><p className="font-bold text-white/80">Customer support</p></div>
-          <div style={tilt(-4)} className="animate-float card bg-sun p-5"><Users2 size={28} /><p className="mt-3 font-display text-2xl font-extrabold leading-tight">People first</p></div>
-          <div style={tilt(4)} className="animate-float card bg-mint p-5"><Globe2 size={28} /><p className="mt-3 font-display text-2xl font-extrabold leading-tight">Made in Mauritius</p></div>
-        </div>
-      </div>
+        {[0, 1, 2].map((i) => <div key={i} className={`h-24 overflow-hidden rounded-2xl md:h-28 ${tileBg[i]}`}>{strip[i] && strip[i].url ? <img src={strip[i].url} alt={strip[i].caption || "TCL moment"} className="h-full w-full object-cover" /> : null}</div>)}
+      </div></Reveal>
     </section>
 
-    <Marquee items={["Customer support", "24/7", "People first", "Service excellence", "Made in Mauritius", "Global mindset"]} />
-
-    <section className="section pt-24">
-      <div className="container grid gap-6 sm:grid-cols-3">
-        {stats.map((s, i) => <Reveal key={s.l} delay={i * 100} className="h-full"><div className="card h-full p-8 text-center"><p className="font-display text-7xl font-extrabold text-ocean"><CountUp to={s.n} /></p><p className="mt-2 text-sm font-extrabold uppercase tracking-widest">{s.l}</p></div></Reveal>)}
-      </div>
+    <section className="container py-3">
+      <Reveal><div className="flex flex-col justify-between gap-6 rounded-3xl bg-brand p-7 text-white md:flex-row md:items-center md:p-9">
+        <div><h2 className="text-2xl font-bold md:text-3xl">Bring your energy. Build what’s next.</h2><p className="mt-2 text-sm text-white/75">Explore opportunities to grow with TCL.</p></div>
+        <Link href="/careers" className="btn bg-white text-ink">Explore careers <ArrowRight size={16} /></Link>
+      </div></Reveal>
     </section>
-
-    <section className="pb-24">
-      <div className="container">
-        <Reveal><SectionHeading eyebrow="The TCL difference" title="A connected team. A consistent standard." copy="We combine the perspective of an international group with the energy, talent and local presence of our Mauritius team." /></Reveal>
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {pillars.map((p, i) => <Reveal key={p.title} delay={i * 90} className="h-full"><div className={`card h-full p-6 transition-transform hover:-translate-y-2 hover:rotate-1 ${p.bg}`}><div className="flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-ink bg-white"><p.icon size={23} /></div><p className="mt-6 font-display text-sm font-extrabold">0{i + 1}</p><h3 className="mt-1 text-xl font-extrabold leading-tight">{p.title}</h3><p className="mt-3 text-sm leading-6">{p.copy}</p></div></Reveal>)}
-        </div>
-      </div>
-    </section>
-
-    <section className="border-y-2 border-ink bg-grape py-20 text-white">
-      <div className="container grid items-center gap-12 lg:grid-cols-2">
-        <Reveal>
-          <span className="eyebrow">Life at TCL</span>
-          <h2 className="mt-5 text-4xl font-extrabold leading-[1.02] tracking-tight md:text-6xl">Good people make great moments.</h2>
-          <p className="mt-5 max-w-lg leading-7 text-white/85">From team celebrations to shared achievements, discover the people and moments that make our workplace what it is.</p>
-          <Link className="btn btn-primary mt-8" href="/gallery">Explore our gallery <ArrowUpRight size={18} /></Link>
-        </Reveal>
-        <div className="grid grid-cols-2 gap-4">
-          {tiles.map((p, i) => <Reveal key={p ? p.id : i} delay={i * 100}>
-            <div className={`card overflow-hidden transition-transform hover:rotate-0 ${i % 2 ? "mt-9 rotate-3" : "-rotate-3"}`}>
-              {p && p.url ? <img src={p.url} alt={p.caption || "TCL team moment"} className="aspect-[4/5] w-full object-cover" /> : <div className="photo-placeholder flex aspect-[4/5] items-end p-4"><span className="rounded-full border-2 border-ink bg-white px-3 py-1.5 text-sm font-extrabold text-ink">{i ? "Celebrations" : "Team moments"}</span></div>}
-            </div>
-          </Reveal>)}
-        </div>
-      </div>
-    </section>
-
-    <section className="section">
-      <div className="container">
-        <Reveal>
-          <div className="relative overflow-hidden rounded-[32px] border-2 border-ink bg-coral px-8 py-14 shadow-pop md:px-14">
-            <span aria-hidden className="absolute -right-4 -top-6 animate-float text-[9rem] opacity-90">🚀</span>
-            <p className="font-display text-sm font-extrabold uppercase tracking-widest">Your next chapter</p>
-            <div className="mt-4 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-              <div><h2 className="max-w-2xl text-4xl font-extrabold leading-[1.02] tracking-tight md:text-6xl">Bring your energy. Build what’s next.</h2><p className="mt-4 max-w-xl leading-7">Explore opportunities to grow with a team that values people, learning and great service.</p></div>
-              <Link href="/careers" className="btn whitespace-nowrap bg-white">Explore careers <ArrowUpRight size={18} /></Link>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  </>;
+  </main>;
 }
