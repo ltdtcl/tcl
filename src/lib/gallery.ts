@@ -20,7 +20,7 @@ export async function getApprovedPhotos(limit?: number): Promise<GalleryPhoto[]>
     const { data: urls } = await supabase.storage.from("tcl-gallery").createSignedUrls(rows.map((r) => r.storage_path), 3600);
     return rows.map((r, i) => {
       const ev = Array.isArray(r.gallery_events) ? r.gallery_events[0] : r.gallery_events;
-      return { id: r.id, url: urls?.[i]?.signedUrl, caption: r.caption, title: ev?.title ?? null, category: ev?.category ?? null };
+      return { id: r.id, url: urls?.[i]?.signedUrl ?? undefined, caption: r.caption, title: ev?.title ?? null, category: ev?.category ?? null };
     });
   } catch {
     return [];
