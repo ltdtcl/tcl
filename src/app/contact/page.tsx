@@ -1,1 +1,12 @@
-export default function Contact(){return <main><section className="bg-[#F4F8FE] py-24"><div className="container"><p className="eyebrow">Contact</p><h1 className="mt-5 text-5xl font-black tracking-tight md:text-7xl">Let's start a <span className="gradient-text">conversation.</span></h1><p className="mt-7 max-w-xl text-lg leading-8 text-slate-600">Have a question about Tropical Consulting Ltd? Reach out and our team will be happy to help.</p></div></section><section className="section"><div className="container grid gap-10 md:grid-cols-2"><div><h2 className="text-2xl font-extrabold">Get in touch</h2><p className="mt-4 leading-7 text-slate-600">For general enquiries, please email our team. Add the verified office address and official phone number here before publishing.</p><a className="btn btn-primary mt-7" href="mailto:info@tropicalconsultingltd.com">Email TCL ↗</a></div><div className="card p-8"><p className="eyebrow">Mauritius</p><h3 className="mt-3 text-2xl font-black">Local presence.<br/>International connection.</h3><p className="mt-4 text-sm leading-6 text-slate-600">TODO: TCL CONTENT — Insert verified office address, telephone number and business hours if publicly appropriate.</p></div></div></section></main>}
+import { PageHero } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
+
+export default function Contact() {
+  return <main>
+    <PageHero eyebrow="Contact" title="Let's start a" accent="conversation." bg="bg-sky" emoji="💬" copy="Have a question about Tropical Consulting Ltd? Reach out and our team will be happy to help." />
+    <section className="section"><div className="container grid gap-10 md:grid-cols-2">
+      <Reveal><h2 className="text-3xl font-extrabold">Get in touch</h2><p className="mt-4 leading-7 text-slate-700">For general enquiries, please email our team. Add the verified office address and official phone number here before publishing.</p><a className="btn btn-primary mt-7" href="mailto:info@tropicalconsultingltd.com">Email TCL ↗</a></Reveal>
+      <Reveal delay={120}><div className="card bg-mint p-8"><span className="eyebrow">Mauritius</span><h3 className="mt-4 text-3xl font-extrabold">Local presence.<br />International connection.</h3><p className="mt-4 text-sm leading-6">TODO: TCL CONTENT — Insert verified office address, telephone number and business hours if publicly appropriate.</p></div></Reveal>
+    </div></section>
+  </main>;
+}

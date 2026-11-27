@@ -1,2 +1,13 @@
+import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
-export default function About(){return <main><section className="bg-[#F4F8FE] py-24"><div className="container"><p className="eyebrow">About Tropical Consulting Ltd</p><h1 className="mt-5 max-w-3xl text-5xl font-black tracking-tight md:text-7xl">International outlook.<br/><span className="gradient-text">Mauritius presence.</span></h1><p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">Tropical Consulting Ltd is based in Mauritius and forms part of an international group. Our work is grounded in people, reliable service and a commitment to doing things well.</p></div></section><section className="section"><div className="container grid gap-12 md:grid-cols-2"><SectionHeading eyebrow="Who we are" title="Local talent. Shared ambition." copy="Being part of an international group connects our local team to a wider network, shared experience and common standards."/><div className="card p-8"><h2 className="text-2xl font-extrabold">Our commitment</h2><p className="mt-4 leading-7 text-slate-600">We believe great service starts with people who feel supported, equipped and empowered to make a difference. We aim to create an environment where quality, collaboration and continuous learning can thrive.</p></div></div></section></main>}
+import { Reveal } from "@/components/reveal";
+
+export default function About() {
+  return <main>
+    <PageHero eyebrow="About Tropical Consulting Ltd" title="International outlook." accent="Mauritius presence." emoji="🌍" copy="Tropical Consulting Ltd is based in Mauritius and forms part of an international group. Our work is grounded in people, reliable service and a commitment to doing things well." />
+    <section className="section"><div className="container grid items-start gap-12 md:grid-cols-2">
+      <Reveal><SectionHeading eyebrow="Who we are" title="Local talent. Shared ambition." copy="Being part of an international group connects our local team to a wider network, shared experience and common standards." /></Reveal>
+      <Reveal delay={120}><div className="card bg-sun p-8"><h2 className="text-3xl font-extrabold">Our commitment</h2><p className="mt-4 leading-7">We believe great service starts with people who feel supported, equipped and empowered to make a difference. We aim to create an environment where quality, collaboration and continuous learning can thrive.</p></div></Reveal>
+    </div></section>
+  </main>;
+}

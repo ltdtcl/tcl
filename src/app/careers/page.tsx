@@ -1,2 +1,19 @@
 import Link from "next/link";
-export default function Careers(){return <main><section className="bg-[#F4F8FE] py-24"><div className="container"><p className="eyebrow">Careers at TCL</p><h1 className="mt-5 max-w-3xl text-5xl font-black tracking-tight md:text-7xl">Your next opportunity starts with <span className="gradient-text">people.</span></h1><p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">Join a Mauritius-based team connected to an international group. Bring your perspective, develop your skills and help deliver great customer experiences.</p><a className="btn btn-primary mt-8" href="mailto:careers@tropicalconsultingltd.com?subject=Career%20enquiry">Send a career enquiry ↗</a></div></section><section className="section"><div className="container"><div className="card p-8 md:p-12"><h2 className="text-3xl font-black">Interested in joining us?</h2><p className="mt-4 max-w-2xl leading-7 text-slate-600">Get in touch with our team to learn about opportunities. Replace this starter contact route with the official recruitment application process before launch.</p><Link className="btn btn-outline mt-7" href="/contact">Contact TCL</Link></div></div></section></main>}
+import { PageHero } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
+
+export default function Careers() {
+  return <main>
+    <PageHero eyebrow="Careers at TCL" title="Your next opportunity starts with" accent="people." bg="bg-sun/40" emoji="🚀" copy="Join a Mauritius-based team connected to an international group. Bring your perspective, develop your skills and help deliver great customer experiences.">
+      <a className="btn btn-primary" href="mailto:careers@tropicalconsultingltd.com?subject=Career%20enquiry">Send a career enquiry ↗</a>
+    </PageHero>
+    <section className="section"><div className="container">
+      <Reveal><div className="card bg-ink p-8 text-white md:p-12">
+        <h2 className="text-4xl font-extrabold md:text-5xl">Interested in joining us?</h2>
+        {/* TODO: TCL CONTENT — replace with the official recruitment application process before launch */}
+        <p className="mt-4 max-w-2xl leading-7 text-white/80">Get in touch with our team to learn about opportunities and what it is like to work at TCL.</p>
+        <Link className="btn btn-primary mt-7" href="/contact">Contact TCL</Link>
+      </div></Reveal>
+    </div></section>
+  </main>;
+}
